@@ -55,9 +55,9 @@ contract MarketPlaceTAA is
 
         if(_Order.payment == address(0)){
             require(msg.value >= _Order.price,"Insufficient balance in ether.");
-            (bool success1, ) = _Order.seller.call{value: _Order.price-_fee}(new bytes(0));
+            (bool success1, ) = payable(_Order.seller).call{value: _Order.price-_fee}(new bytes(0));
             require(success1,"Fail Withdraw 1");
-            (bool success2, ) = address(this).call{value: _fee}(new bytes(0));
+            (bool success2, ) = payable(address(this)).call{value: _fee}(new bytes(0));
             require(success2,"Fail Withdraw 2");
         }else{
             IERC20(_Order.payment).transferFrom(msg.sender,_Order.seller,_Order.price-_fee);

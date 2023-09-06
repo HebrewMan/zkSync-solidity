@@ -2,7 +2,7 @@ import { Wallet, utils, Provider } from "zksync-web3";
 import * as ethers from "ethers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { Deployer } from "@matterlabs/hardhat-zksync-deploy";
-import { abi } from '../artifacts-zk/contracts/tokens/ERC721.sol/NFT721.json';
+import { abi } from '../artifacts-zk/contracts/tokens/ERC1155.sol/NFT1155.json';
 // load env file
 import dotenv from "dotenv";
 dotenv.config();
@@ -22,22 +22,21 @@ export default async function (hre: HardhatRuntimeEnvironment) {
     const getBalance = await signer.getBalance();
     const beforeBalanceL2 = ethers.utils.formatEther(getBalance.toString());
 
-
     console.log("Mint before balance is " + beforeBalanceL2);
 
-    const contractAddress = "0xF57B37F68190D9023b6aed874Db860525298ef27";
+    const contractAddress = "0x2DAE230e224D467A35d56E9093D24A98E9917d70";
     const contract = new ethers.Contract(contractAddress, abi, provider);
     const contractWithSigner = contract.connect(signer);  // if you plan to make non-view calls
 
-    const tx = await contractWithSigner.mint(signer.address);
+    const tx = await contract.baseURI();
 
-    console.log("=========HASH=======>",tx.hash);
+    console.log("=========HASH=======>",tx);
 
-    let nfts = await contract.getUserNFTs(signer.address) 
+    // let nfts = await contract.getUserNFTs(signer.address) 
 
-    nfts = nfts.map(item=>item*1);
+    // nfts = nfts.map(item=>item*1);
 
-    console.log("=========AMOUNT=======>",nfts);
+    // console.log("=========AMOUNT=======>",nfts);
 
 
 }

@@ -41,3 +41,9 @@ If you do not start the zkSync local environment, the tests will fail with error
 - [GitHub](https://github.com/matter-labs)
 - [Twitter](https://twitter.com/zksync)
 - [Discord](https://discord.gg/nMaPGrDDwk)
+
+## Remixd
+- remixd -s <共享文件夹的绝对路径> --remix-ide https://remix.ethereum.org
+
+## hardhat Verify
+- yarn hardhat verify --network zkSyncTestnet contractAddress arg1 arg2 ...

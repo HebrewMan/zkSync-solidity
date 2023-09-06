@@ -29,22 +29,33 @@ export default async function (hre: HardhatRuntimeEnvironment) {
   console.log(`👨‍🔬 Account : ${wallet.address}`);
   console.log(`💰 Deploy Before Balance L2: ${deployBeforeBalanceL2}`);
 
-  const artifact = await deployer.loadArtifact("NFT721");
-  const baseUri = "ipds://test.efas.io";
-  const name = "EFAS NFTs"
-  const symbol = "EFAS721"
-  const nft721Contract = await deployer.deploy(artifact, [baseUri,name,symbol]);
-  // Show the contract info.
-  const contractAddress = nft721Contract.address;
-  console.log(`✅ ${artifact.contractName} was deployed to ${contractAddress}`);
+   //============ NFT20 ==============
+  //  const artifact20 = await deployer.loadArtifact("USDT");
+  //  const name = "EFAS Test USDT";
+  //  const symbol = "USDT";
+  //  const USDT = await deployer.deploy(artifact20, [name,symbol]);
+  //  // Show the contract info.
+  //  console.log(`✅ ${artifact20.contractName} was deployed to ${USDT.address}`);
+
+  // const artifact = await deployer.loadArtifact("NFT721");
+  // const baseUri = "ipds://test.efas.io";
+  // const nameNFT = "EFAS NFTs"
+  // const symbolNFT = "EFAS721"
+  // const nft721Contract = await deployer.deploy(artifact, [baseUri,nameNFT,symbolNFT]);
+  // // Show the contract info.
+  // const contractAddress = nft721Contract.address;
+  // console.log(`✅ ${artifact.contractName} was deployed to ${contractAddress}`);
 
   //============ NFT1155 ==============
-  // const artifact1155 = await deployer.loadArtifact("NFT1155");
-  // const baseUri1155 = "ipds://test.taa.io";
-  // const name1155 = "EFAS 1155 NFTs"
-  // const nft1155Contract = await deployer.deploy(artifact1155, [baseUri1155,name1155]);
-  // // Show the contract info.
-  // console.log(`✅ ${artifact1155.contractName} was deployed to ${nft1155Contract.address}`);
+  const artifact1155 = await deployer.loadArtifact("NFT1155");
+  const baseUri1155 = "ipds://efas.io";
+  const name1155 = "EFAS 1155 NFTs"
+  const nft1155Contract = await deployer.deploy(artifact1155, [baseUri1155,name1155]);
+  // Show the contract info.
+  // console.log(nft1155Contract);
+
+  console.log(`✅ ${artifact1155.contractName} was deployed to ${nft1155Contract.address}`);
+
 
   //============ MARKET ==============
   // const artifactMarket = await deployer.loadArtifact("MarketPlace");
@@ -52,10 +63,12 @@ export default async function (hre: HardhatRuntimeEnvironment) {
   // // Show the contract info.d
   // console.log(`✅ ${artifactMarket.contractName} was deployed to ${marketContract.address}`);
 
-  const getBalance2 = await signer.getBalance();
-  const afterBeforeBalanceL2 = ethers.utils.formatEther(getBalance2.toString());
+  // const getBalance2 = await signer.getBalance();
+  // const afterBeforeBalanceL2 = ethers.utils.formatEther(getBalance2.toString());
 
-  console.log(`💰 After Balance L2: ${afterBeforeBalanceL2}`);
-  console.log(`👨‍🔬 ========== FINISHED =========`);
+  // console.log(`💰 After Balance L2: ${afterBeforeBalanceL2}`);
+  // console.log(`👨‍🔬 ========== FINISHED =========`);
 
 }
+
+

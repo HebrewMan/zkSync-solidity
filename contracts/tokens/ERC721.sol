@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 contract NFT721 is
     ERC721,
     ERC721Enumerable,
@@ -20,7 +19,7 @@ contract NFT721 is
 
     Counters.Counter private _tokenIdCounter;
 
-    event Minted(address indexed minter, uint indexed _tokenId);
+    event Minted(uint indexed itemId,uint indexed tokenId);
     // Base URI
     string public baseURIextended;
 
@@ -50,29 +49,21 @@ contract NFT721 is
         return baseURIextended;
     }
 
-    //需要做验证签名
-    function mint(address _to) public returns (uint tokenId) {
+    function mint(uint _itemId,address _to) public returns (uint tokenId) {
         tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(_to, tokenId);
         string memory tokenIdUri = Strings.toString(tokenId);
         _setTokenURI(tokenId, tokenIdUri);
-    }
-
-    function _mint(address _to) private returns (uint tokenId) {
-        tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(_to, tokenId);
-        string memory tokenIdUri = Strings.toString(tokenId);
-        _setTokenURI(tokenId, tokenIdUri);
+        emit Minted(_itemId,tokenId);
     }
 
     function batchMintForWhitelist(
+        uint[] memory _ids,
         address[] memory _addresses
     ) public onlyOwner {
         for (uint i; i < _addresses.length; i++) {
-            uint _tokenId = _mint(_addresses[i]);
-            emit Minted(msg.sender, _tokenId);
+            mint(_ids[i],_addresses[i]);
         }
     }
 
